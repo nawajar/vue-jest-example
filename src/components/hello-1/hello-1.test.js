@@ -3,14 +3,23 @@ import Hello1 from "./hello-1.vue";
 
 
 describe('Hello1', () => {
-    it('should display text hello1', () => {
+    //dom expect view
+    it('should counter when doSomething', async () => {
         const wrapper = mount(Hello1);
+        wrapper.setData({ count: 0 });
+
+        await wrapper.find('#click-btn').trigger('click');
+
         expect(wrapper.text()).toContain('hello 1');
     });
 
-    it('should button click with doSomething', async() => {
-        const mockMethod = jest.spyOn(Hello1.methods, 'doSomething');
-        await mount(Hello1).find('#click-btn').trigger('click');
-        expect(mockMethod).toHaveBeenCalled();
+    //properties expect
+    it('should counter when doSomething', async () => {
+        const wrapper = mount(Hello1);
+        wrapper.setData({ count: 0 });
+
+        wrapper.vm.doSomething();
+
+        expect(wrapper.vm.count).toBe(1);
     });
 });
